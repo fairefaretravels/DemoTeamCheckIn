@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Team Check-In</title>
+
+<meta name="description"
+content="Team Check-In — a simple team workflow system for businesses, organizations, events and service teams.">
+
+<style>
+:root{
+  --bg:#050505;
+  --card:#111;
+  --card2:#171717;
+  --text:#fff;
+  --muted:#aaa;
+  --accent:#e50914;
+  --accent2:#ff2935;
+  --border:rgba(255,255,255,.10);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  overflow-x:hidden;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:18px 5%;
+
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.95),
+    rgba(0,0,0,.55),
+    transparent
+  );
+}
+
+.logo{
+  font-size:1.25rem;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.nav-link{
+  color:#fff;
+  text-decoration:none;
+  font-size:.9rem;
+  font-weight:700;
+}
+
+.nav-link:hover{
+  color:#ddd;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  min-height:88vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      circle at 70% 35%,
+      rgba(229,9,20,.32),
+      transparent 35%
+    ),
+    linear-gradient(
+      90deg,
+      #050505 0%,
+      #050505 30%,
+      rgba(5,5,5,.72) 60%,
+      rgba(5,5,5,.25) 100%
+    );
+}
+
+.hero-grid{
+  position:absolute;
+  inset:0;
+  opacity:.12;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+
+  background-size:55px 55px;
+
+  mask-image:linear-gradient(
+    to right,
+    black,
+    transparent
+  );
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+
+  width:min(700px,90%);
+
+  margin-left:7%;
+  padding-top:70px;
+}
+
+.eyebrow{
+  display:inline-block;
+
+  padding:7px 12px;
+  margin-bottom:18px;
+
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:5px;
+
+  font-size:.75rem;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+
+  background:rgba(255,255,255,.05);
+}
+
+.hero h1{
+  margin:0 0 20px;
+
+  font-size:clamp(3rem,7vw,6.5rem);
+  line-height:.92;
+  letter-spacing:-4px;
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero p{
+  max-width:600px;
+
+  margin:0 0 30px;
+
+  color:#ccc;
+
+  font-size:1.15rem;
+  line-height:1.65;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:50px;
+
+  padding:0 24px;
+
+  border-radius:5px;
+
+  text-decoration:none;
+
+  font-weight:800;
+
+  transition:.2s ease;
+}
+
+.btn-primary{
+  background:#fff;
+  color:#000;
+}
+
+.btn-primary:hover{
+  background:#ddd;
+  transform:translateY(-2px);
+}
+
+.btn-red{
+  background:var(--accent);
+  color:#fff;
+}
+
+.btn-red:hover{
+  background:var(--accent2);
+  transform:translateY(-2px);
+}
+
+.btn-dark{
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.btn-dark:hover{
+  background:rgba(255,255,255,.18);
+}
+
+/* =========================
+   VIDEO HERO
+========================= */
+
+.video-section{
+  position:relative;
+  margin-top:-90px;
+  z-index:5;
+  padding:0 5% 70px;
+}
+
+.video-card{
+  position:relative;
+
+  max-width:1300px;
+  margin:auto;
+
+  aspect-ratio:16/7;
+
+  overflow:hidden;
+
+  border-radius:14px;
+
+  background:#000;
+
+  border:1px solid var(--border);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.65);
+}
+
+.video-card iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.video-overlay{
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.35),
+      transparent 55%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(0,0,0,.55),
+      transparent 45%
+    );
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+  padding:75px 5%;
+}
+
+.section-header{
+  max-width:900px;
+  margin:0 auto 35px;
+}
+
+.section-header h2{
+  margin:0 0 10px;
+  font-size:clamp(2rem,4vw,3.5rem);
+}
+
+.section-header p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+/* =========================
+   VERSION CARDS
+========================= */
+
+.version-grid{
+  max-width:1200px;
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:20px;
+}
+
+.version-card{
+  position:relative;
+
+  min-height:300px;
+
+  padding:30px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+  background:
+    linear-gradient(
+      145deg,
+      #181818,
+      #0c0c0c
+    );
+
+  border:1px solid var(--border);
+  border-radius:12px;
+
+  overflow:hidden;
+
+  transition:.25s ease;
+}
+
+.version-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,255,255,.25);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.version-number{
+  font-size:4rem;
+  font-weight:900;
+  color:rgba(255,255,255,.08);
+
+  position:absolute;
+  right:20px;
+  top:10px;
+}
+
+.version-card h3{
+  margin:0 0 10px;
+  font-size:1.7rem;
+}
+
+.version-card p{
+  color:#aaa;
+  line-height:1.6;
+}
+
+.version-card .btn{
+  align-self:flex-start;
+}
+
+/* =========================
+   AUDIO COMMERCIAL
+========================= */
+
+.audio-section{
+  background:
+    linear-gradient(
+      135deg,
+      #170305,
+      #080808 55%
+    );
+}
+
+.audio-box{
+  max-width:1200px;
+  margin:auto;
+
+  padding:35px;
+
+  border:1px solid rgba(229,9,20,.25);
+  border-radius:15px;
+
+  background:rgba(255,255,255,.035);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.audio-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.audio-title{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.audio-icon{
+  width:55px;
+  height:55px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:var(--accent);
+
+  font-size:1.3rem;
+}
+
+.audio-title h2{
+  margin:0;
+}
+
+.audio-title p{
+  margin:5px 0 0;
+  color:#999;
+}
+
+.audio-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.audio-btn{
+  width:48px;
+  height:48px;
+
+  border:0;
+  border-radius:50%;
+
+  cursor:pointer;
+
+  background:#fff;
+  color:#000;
+
+  font-size:1.1rem;
+  font-weight:bold;
+}
+
+.audio-btn:hover{
+  transform:scale(1.05);
+}
+
+.audio-status{
+  margin-top:25px;
+  color:#bbb;
+  font-size:.9rem;
+}
+
+.audio-progress{
+  width:100%;
+  height:5px;
+
+  margin-top:15px;
+
+  border-radius:10px;
+
+  background:#292929;
+
+  overflow:hidden;
+}
+
+.audio-progress-bar{
+  width:0%;
+  height:100%;
+
+  background:var(--accent);
+
+  transition:width .1s linear;
+}
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.steps{
+  max-width:1100px;
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:15px;
+}
+
+.step{
+  padding:25px;
+
+  border-radius:10px;
+
+  background:#111;
+  border:1px solid var(--border);
+}
+
+.step-num{
+  color:var(--accent);
+  font-size:.8rem;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.step h3{
+  margin:12px 0 8px;
+}
+
+.step p{
+  margin:0;
+  color:#999;
+  line-height:1.5;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+  padding:100px 5%;
+  text-align:center;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(229,9,20,.18),
+      transparent 55%
+    );
+}
+
+.cta h2{
+  margin:0 0 15px;
+
+  font-size:clamp(2.3rem,5vw,4.5rem);
+}
+
+.cta p{
+  max-width:650px;
+  margin:0 auto 30px;
+
+  color:#aaa;
+  line-height:1.6;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  padding:40px 5%;
+
+  text-align:center;
+
+  color:#666;
+
+  border-top:1px solid rgba(255,255,255,.06);
+
+  font-size:.85rem;
+}
+
+footer strong{
+  color:#aaa;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+  .version-grid{
+    grid-template-columns:1fr;
+  }
+
+  .steps{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .video-card{
+    aspect-ratio:16/9;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .nav{
+    padding:15px 5%;
+  }
+
+  .nav-link{
+    display:none;
+  }
+
+  .hero{
+    min-height:75vh;
+  }
+
+  .hero-content{
+    margin-left:5%;
+    padding-top:100px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .hero p{
+    font-size:1rem;
+  }
+
+  .video-section{
+    margin-top:-30px;
+  }
+
+  .video-card{
+    border-radius:9px;
+  }
+
+  .section{
+    padding:55px 5%;
+  }
+
+  .steps{
+    grid-template-columns:1fr;
+  }
+
+  .audio-box{
+    padding:25px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAV
+========================= -->
+
+<nav class="nav">
+
+  <div class="logo">
+    TEAM<span>CHECK-IN</span>
+  </div>
+
+  <div class="nav-right">
+    <a href="#versions" class="nav-link">VERSIONS</a>
+    <a href="#commercial" class="nav-link">COMMERCIAL</a>
+    <a href="#how" class="nav-link">HOW IT WORKS</a>
+  </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+
+    <div class="eyebrow">
+      One System. Multiple Workflows.
+    </div>
+
+    <h1>
+      KEEP YOUR<br>
+      <span>TEAM MOVING.</span>
+    </h1>
+
+    <p>
+      Team Check-In gives your team a simple place to see
+      what needs to happen, who is handling it, and what's
+      already done.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="#versions" class="btn btn-red">
+        CHOOSE A VERSION
+      </a>
+
+      <a href="#how" class="btn btn-dark">
+        SEE HOW IT WORKS
+      </a>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     NETFLIX STYLE VIDEO
+========================= -->
+
+<section class="video-section">
+
+  <div class="video-card">
+
+    <!--
+      REPLACE YOUR_PLAYLIST_ID_HERE
+      WITH YOUR YOUTUBE PLAYLIST ID.
+
+      Example:
+      https://www.youtube.com/playlist?list=PLxxxxxxxx
+
+      Playlist ID = PLxxxxxxxx
+    -->
+
+    <iframe
+      src="https://www.youtube.com/embed/videoseries?list=YOUR_PLAYLIST_ID_HERE&autoplay=1&mute=1&loop=1&controls=1&rel=0"
+      title="Team Check-In Video"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+    <div class="video-overlay"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     VERSION SELECTOR
+========================= -->
+
+<section class="section" id="versions">
+
+  <div class="section-header">
+
+    <h2>Choose Your Workflow.</h2>
+
+    <p>
+      Start with the version that fits your operation.
+      The same simple Team Check-In concept can be adapted
+      to different teams, businesses and workflows.
+    </p>
+
+  </div>
+
+
+  <div class="version-grid">
+
+
+    <!-- V1 -->
+
+    <article class="version-card">
+
+      <div>
+
+        <div class="version-number">
+          01
+        </div>
+
+        <h3>Team Check-In V1</h3>
+
+        <p>
+          The original workflow experience.
+          Built for teams that need a simple way
+          to organize assignments and completion.
+        </p>
+
+      </div>
+
+      <a
+        href="/Team%20Check-In/V1/"
+        class="btn btn-red">
+        OPEN V1
+      </a>
+
+    </article>
+
+
+    <!-- V2 -->
+
+    <article class="version-card">
+
+      <div>
+
+        <div class="version-number">
+          02
+        </div>
+
+        <h3>Team Check-In V2</h3>
+
+        <p>
+          A second configuration for teams that
+          need a different workflow or operating structure.
+        </p>
+
+      </div>
+
+      <a
+        href="/Team%20Check-In/V2/"
+        class="btn btn-red">
+        OPEN V2
+      </a>
+
+    </article>
+
+
+    <!-- V6 -->
+
+    <article class="version-card">
+
+      <div>
+
+        <div class="version-number">
+          06
+        </div>
+
+        <h3>Team Check-In V6</h3>
+
+        <p>
+          Explore the V6 configuration and see how
+          the workflow can evolve for a different team.
+        </p>
+
+      </div>
+
+      <a
+        href="/Team%20Check-In/V6/"
+        class="btn btn-red">
+        OPEN V6
+      </a>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     AUDIO COMMERCIAL
+========================= -->
+
+<section class="section audio-section" id="commercial">
+
+  <div class="audio-box">
+
+    <div class="audio-top">
+
+      <div class="audio-title">
+
+        <div class="audio-icon">
+          ▶
+        </div>
+
+        <div>
+
+          <h2>Team Check-In Radio</h2>
+
+          <p>
+            Audio commercials & announcements
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="audio-controls">
+
+        <button
+          class="audio-btn"
+          id="playBtn"
+          aria-label="Play commercial">
+          ▶
+        </button>
+
+        <button
+          class="audio-btn"
+          id="muteBtn"
+          aria-label="Mute audio">
+          🔊
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="audio-status" id="audioStatus">
+      Ready — Audio1.mp3
+    </div>
+
+    <div class="audio-progress">
+
+      <div
+        class="audio-progress-bar"
+        id="progressBar">
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section class="section" id="how">
+
+  <div class="section-header">
+
+    <h2>Simple By Design.</h2>
+
+    <p>
+      Team Check-In is built around one idea:
+      everyone should know what needs to happen next.
+    </p>
+
+  </div>
+
+
+  <div class="steps">
+
+    <div class="step">
+
+      <div class="step-num">
+        STEP 01
+      </div>
+
+      <h3>CHECK IN</h3>
+
+      <p>
+        Team members enter the workflow
+        and see what needs attention.
+      </p>
+
+    </div>
+
+
+    <div class="step">
+
+      <div class="step-num">
+        STEP 02
+      </div>
+
+      <h3>CLAIM IT</h3>
+
+      <p>
+        Someone takes responsibility for
+        the task or assignment.
+      </p>
+
+    </div>
+
+
+    <div class="step">
+
+      <div class="step-num">
+        STEP 03
+      </div>
+
+      <h3>DO THE WORK</h3>
+
+      <p>
+        The team completes the assignment
+        and provides whatever proof is required.
+      </p>
+
+    </div>
+
+
+    <div class="step">
+
+      <div class="step-num">
+        STEP 04
+      </div>
+
+      <h3>CHECK IT OFF</h3>
+
+      <p>
+        Everyone sees the updated status
+        and the workflow keeps moving.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta">
+
+  <h2>
+    GET YOUR TEAM<br>
+    <span style="color:#e50914;">CHECKED IN.</span>
+  </h2>
+
+  <p>
+    Choose a version and see how Team Check-In
+    can organize the work your team already does.
+  </p>
+
+  <div class="hero-buttons" style="justify-content:center;">
+
+    <a href="#versions" class="btn btn-red">
+      START HERE
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  <strong>TEAM CHECK-IN</strong>
+
+  <br><br>
+
+  One workflow. Multiple possibilities.
+
+</footer>
+
+
+<!-- =========================
+     AUDIO PLAYER
+========================= -->
+
+<audio id="commercialAudio" preload="auto"></audio>
+
+
+<script>
+/* ==========================================
+   FIREBASE
+========================================== */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBlUUUhC8cqliqr_2uzBjXGFuQvp0MStGo",
+  authDomain: "demostaff-878c5.firebaseapp.com",
+  projectId: "demostaff-878c5",
+  storageBucket: "demostaff-878c5.firebasestorage.app",
+  messagingSenderId: "444429012399",
+  appId: "1:444429012399:web:9a79c7886a0707f2db735a",
+  measurementId: "G-6GCF83P67B"
+};
+
+
+/*
+  Firebase isn't required for this landing page's
+  basic navigation or audio player.
+
+  The configuration is kept here so we can connect
+  Team Check-In analytics / shared configuration later.
+*/
+
+
+/* ==========================================
+   AUDIO COMMERCIAL SYSTEM
+========================================== */
+
+const audio = document.getElementById("commercialAudio");
+
+const playBtn = document.getElementById("playBtn");
+const muteBtn = document.getElementById("muteBtn");
+
+const audioStatus = document.getElementById("audioStatus");
+const progressBar = document.getElementById("progressBar");
+
+
+/*
+  IMPORTANT:
+
+  Put these files in the SAME folder as this
+  index.html:
+
+  Audio1.mp3
+  Audio2.mp3
+  Audio3.mp3
+  Audio4.mp3
+
+  The player automatically advances through
+  all four files.
+*/
+
+const commercials = [
+  "Audio1.mp3",
+  "Audio2.mp3",
+  "Audio3.mp3",
+  "Audio4.mp3"
+];
+
+let currentCommercial = 0;
+
+
+/* Load commercial */
+
+function loadCommercial(index){
+
+  currentCommercial = index;
+
+  audio.src = commercials[currentCommercial];
+
+  audioStatus.textContent =
+    "Ready — " + commercials[currentCommercial];
+
+  progressBar.style.width = "0%";
+}
+
+
+/* Play */
+
+async function playCommercial(){
+
+  try{
+
+    await audio.play();
+
+    playBtn.textContent = "❚❚";
+
+    audioStatus.textContent =
+      "Playing — " + commercials[currentCommercial];
+
+  }catch(error){
+
+    console.log(
+      "Audio playback requires user interaction.",
+      error
+    );
+
+  }
+
+}
+
+
+/* Pause */
+
+function pauseCommercial(){
+
+  audio.pause();
+
+  playBtn.textContent = "▶";
+
+  audioStatus.textContent =
+    "Paused — " + commercials[currentCommercial];
+
+}
+
+
+/* Play / Pause */
+
+playBtn.addEventListener("click", () => {
+
+  if(audio.paused){
+
+    playCommercial();
+
+  }else{
+
+    pauseCommercial();
+
+  }
+
+});
+
+
+/* Mute */
+
+muteBtn.addEventListener("click", () => {
+
+  audio.muted = !audio.muted;
+
+  muteBtn.textContent =
+    audio.muted ? "🔇" : "🔊";
+
+});
+
+
+/* ==========================================
+   AUTOMATIC COMMERCIAL ROTATION
+========================================== */
+
+audio.addEventListener("ended", () => {
+
+  currentCommercial++;
+
+  /*
+    Once Audio4 finishes,
+    return to Audio1.
+  */
+
+  if(currentCommercial >= commercials.length){
+
+    currentCommercial = 0;
+
+  }
+
+  loadCommercial(currentCommercial);
+
+  /*
+    Keep the commercial stream looping
+    while the user has started playback.
+  */
+
+  playCommercial();
+
+});
+
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+audio.addEventListener("timeupdate", () => {
+
+  if(!audio.duration) return;
+
+  const percentage =
+    (audio.currentTime / audio.duration) * 100;
+
+  progressBar.style.width =
+    percentage + "%";
+
+});
+
+
+/* ==========================================
+   INITIAL AUDIO
+========================================== */
+
+loadCommercial(0);
+
+
+/* ==========================================
+   VIDEO FALLBACK
+========================================== */
+
+/*
+  If you haven't entered your YouTube playlist
+  yet, the video area will simply show the
+  YouTube placeholder.
+
+  Replace:
+
+  YOUR_PLAYLIST_ID_HERE
+
+  with your actual playlist ID.
+*/
+
+
+/* ==========================================
+   OPTIONAL: KEYBOARD SHORTCUT
+========================================== */
+
+document.addEventListener("keydown", (event) => {
+
+  if(event.code === "Space"){
+
+    /*
+      Don't hijack the space bar when someone
+      is typing into a form/input.
+    */
+
+    const tag = document.activeElement.tagName;
+
+    if(
+      tag !== "INPUT" &&
+      tag !== "TEXTAREA"
+    ){
+
+      event.preventDefault();
+
+      if(audio.paused){
+
+        playCommercial();
+
+      }else{
+
+        pauseCommercial();
+
+      }
+
+    }
+
+  }
+
+});
+</script>
+
+</body>
+</html>
