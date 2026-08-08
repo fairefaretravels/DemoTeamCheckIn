@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Team Check-In | Recognition</title>
+<style>
+:root{
+  --bg:#050505;
+  --panel:#101010;
+  --panel2:#171717;
+  --panel3:#202020;
+  --text:#fff;
+  --muted:#999;
+  --red:#e50914;
+  --gold:#f5c542;
+  --green:#46c66b;
+  --blue:#4da3ff;
+  --border:rgba(255,255,255,.10);
+}
+*{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+button{
+  cursor:pointer;
+}
+a{
+  color:inherit;
+}
+/* =========================
+   NAV
+========================= */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 5%;
+  background:rgba(5,5,5,.94);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(14px);
+}
+.logo{
+  font-weight:900;
+  letter-spacing:1px;
+}
+.logo span{
+  color:var(--red);
+}
+.nav-actions{
+  display:flex;
+  gap:8px;
+}
+.nav-btn{
+  padding:9px 13px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#111;
+  color:#fff;
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:800;
+}
+/* =========================
+   HERO
+========================= */
+.hero{
+  padding:60px 5% 35px;
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(229,9,20,.18),
+      transparent 30%
+    );
+}
+.hero-inner{
+  max-width:1250px;
+  margin:auto;
+}
+.eyebrow{
+  display:inline-block;
+  padding:7px 11px;
+  border:1px solid rgba(245,197,66,.35);
+  border-radius:5px;
+  color:var(--gold);
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.hero h1{
+  max-width:900px;
+  margin:18px 0 12px;
+  font-size:clamp(2.6rem,6vw,5.7rem);
+  line-height:.94;
+  letter-spacing:-3px;
+}
+.hero h1 span{
+  color:var(--gold);
+}
+.hero p{
+  max-width:700px;
+  color:#bbb;
+  line-height:1.7;
+  font-size:1.05rem;
+}
+/* =========================
+   MAIN
+========================= */
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:20px 5% 80px;
+}
+.section-title{
+  margin:45px 0 20px;
+}
+.section-title h2{
+  margin:0 0 7px;
+  font-size:1.8rem;
+}
+.section-title p{
+  margin:0;
+  color:var(--muted);
+}
+/* =========================
+   STATS
+========================= */
+.stats{
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap:12px;
+}
+.stat{
+  padding:20px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+.stat-label{
+  color:#888;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.stat-value{
+  margin-top:8px;
+  font-size:2rem;
+  font-weight:900;
+}
+.stat.gold .stat-value{
+  color:var(--gold);
+}
+.stat.green .stat-value{
+  color:var(--green);
+}
+.stat.red .stat-value{
+  color:var(--red);
+}
+/* =========================
+   TWO TRACKS
+========================= */
+.track-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(2,1fr);
+  gap:18px;
+}
+.track{
+  padding:28px;
+  background:
+    linear-gradient(
+      145deg,
+      #181818,
+      #0d0d0d
+    );
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.track.core{
+  border-color:rgba(77,163,255,.22);
+}
+.track.extra{
+  border-color:rgba(245,197,66,.25);
+}
+.track-icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  margin-bottom:17px;
+  border-radius:10px;
+  background:#222;
+  font-size:1.3rem;
+}
+.track.extra .track-icon{
+  background:rgba(245,197,66,.12);
+}
+.track h3{
+  margin:0 0 8px;
+  font-size:1.35rem;
+}
+.track p{
+  color:#999;
+  line-height:1.6;
+}
+.track ul{
+  margin:20px 0 0;
+  padding:0;
+  list-style:none;
+}
+.track li{
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  color:#ccc;
+  font-size:.9rem;
+}
+.track li:last-child{
+  border-bottom:0;
+}
+/* =========================
+   TEAM
+========================= */
+.team-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:15px;
+}
+.member{
+  position:relative;
+  padding:22px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:11px;
+}
+.member-top{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+.avatar{
+  width:50px;
+  height:50px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#292929;
+  font-weight:900;
+}
+.member h3{
+  margin:0 0 3px;
+}
+.role{
+  color:#777;
+  font-size:.75rem;
+}
+.performance{
+  display:flex;
+  gap:7px;
+  margin:18px 0;
+}
+.performance span{
+  padding:6px 8px;
+  border-radius:5px;
+  background:#191919;
+  color:#aaa;
+  font-size:.68rem;
+  font-weight:800;
+}
+.performance .extra{
+  color:var(--gold);
+}
+.performance .leader{
+  color:#72b5ff;
+}
+.member-actions{
+  display:flex;
+  gap:8px;
+}
+.btn{
+  border:0;
+  border-radius:6px;
+  padding:10px 13px;
+  font-weight:900;
+  font-size:.75rem;
+}
+.btn-red{
+  background:var(--red);
+  color:#fff;
+}
+.btn-dark{
+  background:#222;
+  color:#fff;
+  border:1px solid var(--border);
+}
+.btn-gold{
+  background:var(--gold);
+  color:#000;
+}
+/* =========================
+   RECOGNITION
+========================= */
+.recognition-grid{
+  display:grid;
+  grid-template-columns:
+    1.2fr .8fr;
+  gap:18px;
+}
+.recognition-panel{
+  padding:25px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.recognition-panel h3{
+  margin-top:0;
+}
+.badges{
+  display:grid;
+  grid-template-columns:
+    repeat(2,1fr);
+  gap:10px;
+}
+.badge{
+  padding:16px;
+  background:#171717;
+  border:1px solid var(--border);
+  border-radius:9px;
+}
+.badge-icon{
+  font-size:1.6rem;
+}
+.badge strong{
+  display:block;
+  margin-top:7px;
+}
+.badge small{
+  color:#777;
+}
+/* =========================
+   REWARD DROP
+========================= */
+.reward{
+  position:relative;
+  padding:28px;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      135deg,
+      #211b08,
+      #121212 65%
+    );
+  border:1px solid rgba(245,197,66,.28);
+  border-radius:13px;
+}
+.reward::after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  right:-70px;
+  top:-70px;
+  border-radius:50%;
+  background:rgba(245,197,66,.08);
+}
+.reward-label{
+  color:var(--gold);
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.reward h2{
+  margin:10px 0;
+  font-size:2rem;
+}
+.reward p{
+  color:#aaa;
+  line-height:1.5;
+}
+.reward-details{
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:10px;
+  margin:22px 0;
+}
+.reward-detail{
+  padding:13px;
+  background:rgba(0,0,0,.25);
+  border-radius:7px;
+}
+.reward-detail span{
+  display:block;
+  color:#777;
+  font-size:.65rem;
+  text-transform:uppercase;
+}
+.reward-detail strong{
+  display:block;
+  margin-top:5px;
+}
+/* =========================
+   LEADERSHIP
+========================= */
+.leader-list{
+  display:grid;
+  gap:10px;
+}
+.leader-row{
+  display:grid;
+  grid-template-columns:
+    50px 1fr auto;
+  align-items:center;
+  gap:13px;
+  padding:14px;
+  background:#171717;
+  border-radius:8px;
+}
+.leader-score{
+  color:var(--gold);
+  font-weight:900;
+}
+/* =========================
+   HISTORY
+========================= */
+.history{
+  display:grid;
+  gap:10px;
+}
+.history-row{
+  display:grid;
+  grid-template-columns:
+    1fr 1fr 1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:15px;
+  background:#111;
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+.history-row small{
+  color:#777;
+}
+.history-badge{
+  color:var(--gold);
+  font-size:.75rem;
+  font-weight:900;
+}
+/* =========================
+   MODAL
+========================= */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.8);
+  backdrop-filter:blur(8px);
+}
+.modal.show{
+  display:flex;
+}
+.modal-card{
+  width:min(560px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:28px;
+  background:#111;
+  border:1px solid var(--border);
+  border-radius:13px;
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.modal-header h2{
+  margin:0;
+}
+.close{
+  width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:50%;
+  background:#222;
+  color:#fff;
+}
+.form-group{
+  margin-top:18px;
+}
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+  color:#aaa;
+  font-size:.78rem;
+  font-weight:800;
+}
+.form-group select,
+.form-group textarea,
+.form-group input{
+  width:100%;
+  padding:12px;
+  background:#080808;
+  color:#fff;
+  border:1px solid var(--border);
+  border-radius:7px;
+  outline:none;
+}
+.form-group textarea{
+  min-height:100px;
+  resize:vertical;
+}
+.reason-note{
+  display:none;
+  margin-top:10px;
+  padding:10px;
+  color:#f0b0b0;
+  background:rgba(229,9,20,.08);
+  border-radius:6px;
+  font-size:.75rem;
+}
+/* =========================
+   TOAST
+========================= */
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:6000;
+  max-width:360px;
+  padding:16px 18px;
+  background:#171717;
+  border:1px solid var(--border);
+  border-radius:9px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  transform:translateY(120px);
+  opacity:0;
+  transition:.3s ease;
+}
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+.toast strong{
+  display:block;
+  margin-bottom:4px;
+}
+.toast span{
+  color:#999;
+  font-size:.82rem;
+}
+/* =========================
+   FOOTER
+========================= */
+footer{
+  padding:40px 5%;
+  text-align:center;
+  color:#666;
+  border-top:1px solid var(--border);
+  font-size:.8rem;
+}
+/* =========================
+   MOBILE
+========================= */
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+  .team-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+  .recognition-grid{
+    grid-template-columns:1fr;
+  }
+}
+@media(max-width:650px){
+  .hero{
+    padding-top:40px;
+  }
+  .hero h1{
+    letter-spacing:-2px;
+  }
+  .track-grid,
+  .team-grid{
+    grid-template-columns:1fr;
+  }
+  .badges{
+    grid-template-columns:1fr;
+  }
+  .reward-details{
+    grid-template-columns:1fr;
+  }
+  .history-row{
+    grid-template-columns:1fr;
+  }
+  .nav-actions{
+    display:none;
+  }
+}
+</style>
+</head>
+<body>
+<!-- =========================
+     NAVIGATION
+========================= -->
+<nav class="nav">
+  <div class="logo">
+    TEAM <span>CHECK-IN</span>
+  </div>
+  <div class="nav-actions">
+<a
+  class="nav-btn"
+  href="/Team%20Check-In/">
+  TEAM CHECK-IN
+</a>
+<a
+  class="nav-btn"
+  href="/Team%20Work%20Demo/">
+  DEMO
+</a>
+  </div>
+</nav>
+<!-- =========================
+     HERO
+========================= -->
+<header class="hero">
+  <div class="hero-inner">
+<div class="eyebrow">
+  RECOGNITION ENGINE
+</div>
+<h1>
+  MAKE GREAT WORK<br>
+  <span>VISIBLE.</span>
+</h1>
+<p>
+  Team Check-In tracks the work people are responsible
+  for — and gives managers a way to recognize the people
+  who step up when the team needs them.
+</p>
+  </div>
+</header>
+<main class="container">
+<!-- =========================
+     STATS
+========================= -->
+<section>
+  <div class="stats">
+<div class="stat green">
+  <div class="stat-label">
+    Core Performance
+  </div>
+  <div class="stat-value">
+    94%
+  </div>
+</div>
+<div class="stat gold">
+  <div class="stat-label">
+    Above & Beyond
+  </div>
+  <div class="stat-value">
+    27
+  </div>
+</div>
+<div class="stat">
+  <div class="stat-label">
+    Recognitions
+  </div>
+  <div class="stat-value">
+    18
+  </div>
+</div>
+<div class="stat red">
+  <div class="stat-label">
+    Reward Drops
+  </div>
+  <div class="stat-value">
+    4
+  </div>
+</div>
+  </div>
+</section>
+<!-- =========================
+     TWO TRACKS
+========================= -->
+<section>
+  <div class="section-title">
+<h2>
+  Two Things Can Be True.
+</h2>
+<p>
+  Doing your job well matters. So does stepping up
+  when your team needs you.
+</p>
+  </div>
+  <div class="track-grid">
+<article class="track core">
+  <div class="track-icon">
+    ✓
+  </div>
+  <h3>
+    Core Performance
+  </h3>
+  <p>
+    Recognize people for consistently performing
+    their assigned responsibilities.
+  </p>
+  <ul>
+    <li>
+      ✓ Completes assigned work
+    </li>
+    <li>
+      ✓ Reliable attendance/check-in
+    </li>
+    <li>
+      ✓ Quality of work
+    </li>
+    <li>
+      ✓ Consistent performance
+    </li>
+  </ul>
+</article>
+<article class="track extra">
+  <div class="track-icon">
+    ⭐
+  </div>
+  <h3>
+    Above & Beyond
+  </h3>
+  <p>
+    Track the people who repeatedly step up when
+    unexpected work or problems appear.
+  </p>
+  <ul>
+    <li>
+      ⭐ Picks up uncovered tasks
+    </li>
+    <li>
+      ⭐ Helps another teammate
+    </li>
+    <li>
+      ⭐ Solves unexpected problems
+    </li>
+    <li>
+      ⭐ Takes initiative
+    </li>
+  </ul>
+</article>
+  </div>
+</section>
+<!-- =========================
+     TEAM
+========================= -->
+<section>
+  <div class="section-title">
+<h2>
+  Your Team
+</h2>
+<p>
+  Managers can recognize contribution without
+  penalizing people who simply do their job well.
+</p>
+  </div>
+  <div class="team-grid">
+<article class="member">
+  <div class="member-top">
+    <div class="avatar">
+      JR
+    </div>
+    <div>
+      <h3>
+        Jordan
+      </h3>
+      <div class="role">
+        Event Operations
+      </div>
+    </div>
+  </div>
+  <div class="performance">
+    <span>
+      CORE 98%
+    </span>
+    <span class="extra">
+      EXTRA 12
+    </span>
+    <span class="leader">
+      LEADERSHIP
+    </span>
+  </div>
+  <div class="member-actions">
+    <button
+      class="btn btn-gold"
+      onclick="openRecognition('Jordan')">
+      ⭐ RECOGNIZE
+    </button>
+    <button
+      class="btn btn-dark"
+      onclick="viewProfile('Jordan')">
+      VIEW
+    </button>
+  </div>
+</article>
+<article class="member">
+  <div class="member-top">
+    <div class="avatar">
+      TA
+    </div>
+    <div>
+      <h3>
+        Taylor
+      </h3>
+      <div class="role">
+        Registration
+      </div>
+    </div>
+  </div>
+  <div class="performance">
+    <span>
+      CORE 100%
+    </span>
+    <span class="extra">
+      EXTRA 2
+    </span>
+  </div>
+  <div class="member-actions">
+    <button
+      class="btn btn-gold"
+      onclick="openRecognition('Taylor')">
+      ⭐ RECOGNIZE
+    </button>
+    <button
+      class="btn btn-dark"
+      onclick="viewProfile('Taylor')">
+      VIEW
+    </button>
+  </div>
+</article>
+<article class="member">
+  <div class="member-top">
+    <div class="avatar">
+      MC
+    </div>
+    <div>
+      <h3>
+        Marcus
+      </h3>
+      <div class="role">
+        Production
+      </div>
+    </div>
+  </div>
+  <div class="performance">
+    <span>
+      CORE 96%
+    </span>
+    <span class="extra">
+      EXTRA 9
+    </span>
+    <span class="leader">
+      LEADERSHIP
+    </span>
+  </div>
+  <div class="member-actions">
+    <button
+      class="btn btn-gold"
+      onclick="openRecognition('Marcus')">
+      ⭐ RECOGNIZE
+    </button>
+    <button
+      class="btn btn-dark"
+      onclick="viewProfile('Marcus')">
+      VIEW
+    </button>
+  </div>
+</article>
+  </div>
+</section>
+<!-- =========================
+     RECOGNITION TYPES
+========================= -->
+<section>
+  <div class="section-title">
+<h2>
+  Recognition That Means Something.
+</h2>
+<p>
+  Not every great employee has to work outside their
+  role. Recognition can happen for different reasons.
+</p>
+  </div>
+  <div class="recognition-panel">
+<div class="badges">
+  <div class="badge">
+    <div class="badge-icon">
+      🏅
+    </div>
+    <strong>
+      Excellence
+    </strong>
+    <small>
+      Consistently performs assigned responsibilities.
+    </small>
+  </div>
+  <div class="badge">
+    <div class="badge-icon">
+      ⭐
+    </div>
+    <strong>
+      Above & Beyond
+    </strong>
+    <small>
+      Steps up when the team needs help.
+    </small>
+  </div>
+  <div class="badge">
+    <div class="badge-icon">
+      🤝
+    </div>
+    <strong>
+      Team Builder
+    </strong>
+    <small>
+      Helps coworkers succeed.
+    </small>
+  </div>
+  <div class="badge">
+    <div class="badge-icon">
+      💡
+    </div>
+    <strong>
+      Problem Solver
+    </strong>
+    <small>
+      Finds solutions when something goes wrong.
+    </small>
+  </div>
+  <div class="badge">
+    <div class="badge-icon">
+      👑
+    </div>
+    <strong>
+      Leadership Potential
+    </strong>
+    <small>
+      Demonstrates judgment and initiative.
+    </small>
+  </div>
+  <div class="badge">
+    <div class="badge-icon">
+      ❤️
+    </div>
+    <strong>
+      Customer Champion
+    </strong>
+    <small>
+      Creates an exceptional customer experience.
+    </small>
+  </div>
+</div>
+  </div>
+</section>
+<!-- =========================
+     REWARD DROP
+========================= -->
+<section>
+  <div class="reward">
+<div class="reward-label">
+  ACTIVE REWARD DROP
+</div>
+<h2>
+  🎟️ CONCERT TICKETS
+</h2>
+<p>
+  A sponsor partner has made four event tickets
+  available for qualifying team members.
+</p>
+<div class="reward-details">
+  <div class="reward-detail">
+    <span>
+      Tickets
+    </span>
+    <strong>
+      4
+    </strong>
+  </div>
+  <div class="reward-detail">
+    <span>
+      Qualification
+    </span>
+    <strong>
+      Recognition
+    </strong>
+  </div>
+  <div class="reward-detail">
+    <span>
+      Status
+    </span>
+    <strong>
+      Open
+    </strong>
+  </div>
+</div>
+<button
+  class="btn btn-gold"
+  onclick="showToast(
+    'Reward Eligibility',
+    'The system will evaluate qualifying recognition activity.'
+  )">
+  VIEW ELIGIBILITY
+</button>
+  </div>
+</section>
+<!-- =========================
+     LEADERSHIP
+========================= -->
+<section>
+  <div class="section-title">
+<h2>
+  Leadership Pipeline
+</h2>
+<p>
+  Recognition does not automatically promote anyone.
+  It gives managers better evidence when leadership
+  opportunities become available.
+</p>
+  </div>
+  <div class="recognition-panel">
+<div class="leader-list">
+  <div class="leader-row">
+    <div class="avatar">
+      JR
+    </div>
+    <div>
+      <strong>
+        Jordan
+      </strong>
+      <br>
+      <small>
+        12 extra contributions · 5 team assists · 3 roles
+      </small>
+    </div>
+    <div class="leader-score">
+      HIGH
+    </div>
+  </div>
+  <div class="leader-row">
+    <div class="avatar">
+      MC
+    </div>
+    <div>
+      <strong>
+        Marcus
+      </strong>
+      <br>
+      <small>
+        9 extra contributions · 7 team assists · 2 roles
+      </small>
+    </div>
+    <div class="leader-score">
+      HIGH
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+<!-- =========================
+     RECOGNITION HISTORY
+========================= -->
+<section>
+  <div class="section-title">
+<h2>
+  Recognition History
+</h2>
+<p>
+  Keep contribution visible instead of relying on memory
+  or workplace politics.
+</p>
+  </div>
+  <div class="history">
+<div class="history-row">
+  <div>
+    <strong>
+      Jordan
+    </strong>
+    <br>
+    <small>
+      Helped cover equipment setup
+    </small>
+  </div>
+  <div>
+    Above & Beyond
+  </div>
+  <div>
+    Aug 8, 2026
+  </div>
+  <div class="history-badge">
+    ⭐ RECOGNIZED
+  </div>
+</div>
+<div class="history-row">
+  <div>
+    <strong>
+      Taylor
+    </strong>
+    <br>
+    <small>
+      Completed registration perfectly
+    </small>
+  </div>
+  <div>
+    Excellence
+  </div>
+  <div>
+    Aug 8, 2026
+  </div>
+  <div class="history-badge">
+    🏅 RECOGNIZED
+  </div>
+</div>
+<div class="history-row">
+  <div>
+    <strong>
+      Marcus
+    </strong>
+    <br>
+    <small>
+      Solved urgent production issue
+    </small>
+  </div>
+  <div>
+    Problem Solver
+  </div>
+  <div>
+    Aug 7, 2026
+  </div>
+  <div class="history-badge">
+    💡 RECOGNIZED
+  </div>
+</div>
+  </div>
+</section>
+</main>
+<!-- =========================
+     FOOTER
+========================= -->
+<footer>
+  <strong>
+    TEAM CHECK-IN
+  </strong>
+
+Do your job well. Step up when you can.
+Get recognized for what you contribute.
+
+</footer>
+<!-- =========================
+     RECOGNITION MODAL
+========================= -->
+<div
+  class="modal"
+  id="recognitionModal">
+  <div class="modal-card">
+<div class="modal-header">
+  <h2>
+    ⭐ Recognize Team Member
+  </h2>
+  <button
+    class="close"
+    onclick="closeRecognition()">
+    ×
+  </button>
+</div>
+<p id="recognitionMember"
+   style="color:#aaa;">
+</p>
+<div class="form-group">
+  <label>
+    RECOGNITION TYPE
+  </label>
+  <select id="recognitionType">
+    <option value="Excellence">
+      🏅 Excellence
+    </option>
+    <option value="Above & Beyond">
+      ⭐ Above & Beyond
+    </option>
+    <option value="Team Builder">
+      🤝 Team Builder
+    </option>
+    <option value="Problem Solver">
+      💡 Problem Solver
+    </option>
+    <option value="Leadership Potential">
+      👑 Leadership Potential
+    </option>
+    <option value="Customer Champion">
+      ❤️ Customer Champion
+    </option>
+  </select>
+</div>
+<div class="form-group">
+  <label>
+    WHAT DID THEY DO?
+  </label>
+  <textarea
+    id="recognitionReason"
+    placeholder="Describe the contribution...">
+  </textarea>
+</div>
+<div class="form-group">
+  <label>
+    REWARD / RECOGNITION
+  </label>
+  <select id="recognitionReward">
+    <option value="Badge only">
+      Digital Badge
+    </option>
+    <option value="Free Lunch">
+      Free Lunch
+    </option>
+    <option value="Gas Card">
+      Gas Card
+    </option>
+    <option value="Company Swag">
+      Company Swag
+    </option>
+    <option value="Sponsor Coupon">
+      Sponsor Coupon
+    </option>
+    <option value="Concert / Event Ticket">
+      Concert / Event Ticket
+    </option>
+  </select>
+</div>
+<div class="form-group">
+  <label>
+    LEADERSHIP CONSIDERATION
+  </label>
+  <select id="leadershipConsideration">
+    <option value="No">
+      No
+    </option>
+    <option value="Yes">
+      Flag for Leadership Review
+    </option>
+  </select>
+</div>
+<div
+  style="
+    display:flex;
+    gap:10px;
+    margin-top:25px;
+  ">
+  <button
+    class="btn btn-dark"
+    onclick="closeRecognition()">
+    CANCEL
+  </button>
+  <button
+    class="btn btn-gold"
+    onclick="submitRecognition()">
+    SAVE RECOGNITION
+  </button>
+</div>
+  </div>
+</div>
+<!-- =========================
+     TOAST
+========================= -->
+<div
+  class="toast"
+  id="toast">
+  <strong id="toastTitle">
+    Saved
+  </strong>
+  <span id="toastMessage">
+    Recognition saved.
+  </span>
+</div>
+<!-- =========================
+     FIREBASE
+========================= -->
+<script type="module">
+/*
+  Firebase configuration supplied for
+  the Team Check-In project.
+*/
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey:
+    "AIzaSyBlUUUhC8cqliqr_2uzBjXGFuQvp0MStGo",
+  authDomain:
+    "demostaff-878c5.firebaseapp.com",
+  projectId:
+    "demostaff-878c5",
+  storageBucket:
+    "demostaff-878c5.firebasestorage.app",
+  messagingSenderId:
+    "444429012399",
+  appId:
+    "1:444429012399:web:9a79c7886a0707f2db735a",
+  measurementId:
+    "G-6GCF83P67B"
+};
+const app =
+  initializeApp(firebaseConfig);
+const db =
+  getFirestore(app);
+/*
+  Make Firebase functions available
+  to the rest of the page.
+*/
+window.teamCheckInDB = db;
+window.saveRecognitionToFirebase =
+async function(data){
+  try{
+    await addDoc(
+      collection(
+        db,
+        "teamRecognitions"
+      ),
+      {
+        ...data,
+        createdAt:
+          serverTimestamp()
+      }
+    );
+    return true;
+  }catch(error){
+    console.error(
+      "Recognition save failed:",
+      error
+    );
+    return false;
+  }
+};
+</script>
+<!-- =========================
+     PAGE LOGIC
+========================= -->
+<script>
+let selectedMember = "";
+/* =========================
+   OPEN RECOGNITION
+========================= */
+function openRecognition(member){
+  selectedMember = member;
+  document
+    .getElementById("recognitionMember")
+    .textContent =
+      "Recognizing: " + member;
+  document
+    .getElementById("recognitionModal")
+    .classList
+    .add("show");
+}
+/* =========================
+   CLOSE
+========================= */
+function closeRecognition(){
+  document
+    .getElementById("recognitionModal")
+    .classList
+    .remove("show");
+}
+/* =========================
+   SUBMIT
+========================= */
+async function submitRecognition(){
+  const type =
+    document
+      .getElementById("recognitionType")
+      .value;
+  const reason =
+    document
+      .getElementById("recognitionReason")
+      .value
+      .trim();
+  const reward =
+    document
+      .getElementById("recognitionReward")
+      .value;
+  const leadership =
+    document
+      .getElementById("leadershipConsideration")
+      .value;
+  if(!reason){
+    showToast(
+      "Reason Required",
+      "Tell the team what this person did."
+    );
+    return;
+  }
+  const recognition = {
+    teamMember:
+      selectedMember,
+    recognitionType:
+      type,
+    reason:
+      reason,
+    reward:
+      reward,
+    leadershipConsideration:
+      leadership,
+    manager:
+      "Demo Manager"
+  };
+  /*
+    Save locally immediately so the demo
+    still works even if Firebase rules
+    have not been configured yet.
+  */
+  const local =
+    JSON.parse(
+      localStorage.getItem(
+        "teamRecognitions"
+      ) || "[]"
+    );
+  local.push({
+    ...recognition,
+    createdAt:
+      new Date().toISOString()
+  });
+  localStorage.setItem(
+    "teamRecognitions",
+    JSON.stringify(local)
+  );
+  /*
+    Also attempt Firebase save.
+  */
+  if(
+    window.saveRecognitionToFirebase
+  ){
+    await window
+      .saveRecognitionToFirebase(
+        recognition
+      );
+  }
+  closeRecognition();
+  showToast(
+    "⭐ Recognition Saved",
+    selectedMember +
+    " received " +
+    type +
+    " recognition."
+  );
+  document
+    .getElementById("recognitionReason")
+    .value = "";
+}
+/* =========================
+   PROFILE
+========================= */
+function viewProfile(member){
+  showToast(
+    member + " Profile",
+    "Contribution history and leadership data will appear here."
+  );
+}
+/* =========================
+   TOAST
+========================= */
+let toastTimer;
+function showToast(title,message){
+  const toast =
+    document.getElementById("toast");
+  document
+    .getElementById("toastTitle")
+    .textContent = title;
+  document
+    .getElementById("toastMessage")
+    .textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer =
+    setTimeout(
+      () => {
+        toast.classList.remove("show");
+      },
+      3500
+    );
+}
+/* =========================
+   ESCAPE MODAL
+========================= */
+document.addEventListener(
+  "keydown",
+  event => {
+    if(event.key === "Escape"){
+      closeRecognition();
+    }
+  }
+);
+/* =========================
+   CLICK OUTSIDE
+========================= */
+document
+  .getElementById("recognitionModal")
+  .addEventListener(
+    "click",
+    event => {
+      if(
+        event.target.id ===
+        "recognitionModal"
+      ){
+        closeRecognition();
+      }
+    }
+  );
+</script>
+</body>
+</html>
