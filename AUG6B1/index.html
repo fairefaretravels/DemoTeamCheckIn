@@ -966,17 +966,15 @@ document.getElementById("mediaFiles");
 const fileList =
 document.getElementById("fileList");
 mediaFiles.addEventListener("change", () => {
-  const files = Array.from(mediaFiles.files);
-  if(!files.length){
-    fileList.textContent =
-      "No files selected.";
-    return;
-  }
-  fileList.innerHTML =
-    files.map(file =>
-      `${file.name} — ${formatSize(file.size)}`
-    ).join("<br>");
-});
+  const firebaseConfig = {
+  apiKey: "AIzaSyBlUUUhC8cqliqr_2uzBjXGFuQvp0MStGo",
+  authDomain: "demostaff-878c5.firebaseapp.com",
+  projectId: "demostaff-878c5",
+  storageBucket: "demostaff-878c5.firebasestorage.app",
+  messagingSenderId: "444429012399",
+  appId: "1:444429012399:web:9a79c7886a0707f2db735a",
+  measurementId: "G-6GCF83P67B"
+};
 function formatSize(bytes){
   if(bytes < 1024)
     return bytes + " B";
