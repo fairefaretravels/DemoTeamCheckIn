@@ -426,6 +426,23 @@ footer strong {
     gap: 15px;
   }
 }
+  .video-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 25px 80px rgba(0,0,0,.65);
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
 </style>
 </head>
 <body>
@@ -473,21 +490,21 @@ footer strong {
 <!-- =========================
      VIDEO
 ========================= -->
+
 <section class="video-section" id="story">
+
   <div class="video-wrapper">
-    <video
-      controls
-      playsinline
-      preload="metadata"
-      poster=""
-    >
-      <source
-        src="team-checkin-story.mp4"
-        type="video/mp4"
-      >
-      Your browser does not support HTML5 video.
-    </video>
+
+    <iframe
+      src="https://www.youtube.com/embed/xOw9MMP9NlA3hzS3?rel=0"
+      title="Team Check-In"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+
   </div>
+
 </section>
 <!-- =========================
      PROBLEM
