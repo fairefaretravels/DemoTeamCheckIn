@@ -893,111 +893,217 @@ init();
 </style>
  <script>
 
+<script>
+/* ================= TEAM DEMO ================= */
+
 const demoSteps = [
-
-{
-title:"Welcome to HIT FOR HIT Command Center",
-text:"This is mission control for the event. Everything from artists, staff, schedule, streaming, and checklists lives here."
-},
-
-{
-title:"Dashboard",
-text:"This is your home base. Check event status, alerts, and anything that needs immediate attention."
-},
-
-{
-title:"Artist Check-In",
-text:"When an artist arrives, confirm their agreement, wristband, performance order, and readiness."
-},
-
-{
-title:"Event Timeline",
-text:"Follow the schedule. Battles, intermissions, and announcements should stay on time."
-},
-
-{
-title:"Live Production",
-text:"Before doors open, verify cameras, audio, livestream, and internet connection."
-},
-
-{
-title:"Checklist",
-text:"Complete tasks and check them off. Everyone stays updated in real time."
-},
-
-{
-title:"Voting",
-text:"Monitor votes and confirm results before announcing winners."
-},
-
-{
-title:"End of Night",
-text:"Save content, collect paperwork, pack equipment, and prepare notes for the next battle."
-}
-
+  {
+    title: "Welcome to HIT FOR HIT Command Center",
+    text: "This is mission control for the event. Everything from artists, staff, schedule, streaming, and checklists lives here."
+  },
+  {
+    title: "Dashboard",
+    text: "This is your home base. Check event status, alerts, and anything that needs immediate attention."
+  },
+  {
+    title: "Artist Check-In",
+    text: "When an artist arrives, confirm their agreement, wristband, performance order, and readiness."
+  },
+  {
+    title: "Event Timeline",
+    text: "Follow the schedule. Battles, intermissions, and announcements should stay on time."
+  },
+  {
+    title: "Live Production",
+    text: "Before doors open, verify cameras, audio, livestream, and internet connection."
+  },
+  {
+    title: "Checklist",
+    text: "Complete tasks and check them off. Everyone stays updated in real time."
+  },
+  {
+    title: "Voting",
+    text: "Monitor votes and confirm results before announcing winners."
+  },
+  {
+    title: "End of Night",
+    text: "Save content, collect paperwork, pack equipment, and prepare notes for the next battle."
+  }
 ];
 
-let demoIndex=0;
+let demoIndex = 0;
 
+function startDemo() {
+  demoIndex = 0;
 
-function startDemo(){
+  const overlay = document.getElementById("demoOverlay");
 
-demoIndex=0;
+  if (!overlay) return;
 
-document.getElementById("demoOverlay").style.display="flex";
-
-showDemo();
-
+  overlay.style.display = "flex";
+  showDemo();
 }
 
+function showDemo() {
+  const step = demoSteps[demoIndex];
 
-function showDemo(){
+  if (!step) return;
 
-let step=demoSteps[demoIndex];
+  document.getElementById("demoTitle").textContent = step.title;
+  document.getElementById("demoText").textContent = step.text;
 
-document.getElementById("demoTitle").innerHTML=step.title;
+  const nextButton = document.querySelector(".next-demo");
 
-document.getElementById("demoText").innerHTML=step.text;
-
+  if (nextButton) {
+    nextButton.textContent =
+      demoIndex === demoSteps.length - 1
+        ? "Finish"
+        : "Next →";
+  }
 }
 
+function nextDemo() {
+  demoIndex++;
 
-function nextDemo(){
+  if (demoIndex >= demoSteps.length) {
+    closeDemo();
+    return;
+  }
 
-demoIndex++;
-
-if(demoIndex >= demoSteps.length){
-
-closeDemo();
-
-alert("Demo complete. Welcome to HIT FOR HIT Command Center!");
-
-return;
-
+  showDemo();
 }
 
-showDemo();
+function closeDemo() {
+  const overlay = document.getElementById("demoOverlay");
 
+  if (overlay) {
+    overlay.style.display = "none";
+  }
 }
 
+/* ================= PRINT ================= */
 
-function closeDemo(){
+document.addEventListener("DOMContentLoaded", function () {
 
-document.getElementById("demoOverlay").style.display="none";
+  const printBtn = document.getElementById("printChecklistBtn");
 
-}
-
-<script>
-document.addEventListener("DOMContentLoaded", function(){
-  const printBtn = document.querySelector(".print-btn");
-
-  if(printBtn){
-    printBtn.addEventListener("click", function(){
+  if (printBtn) {
+    printBtn.addEventListener("click", function () {
       window.print();
     });
   }
+
 });
 </script>
-  
+
+
+<!-- ================= TEAM DEMO OVERLAY ================= -->
+
+<div id="demoOverlay" class="demo-overlay">
+
+  <div class="demo-box">
+
+    <button
+      type="button"
+      onclick="closeDemo()"
+      class="close-demo"
+      aria-label="Close demo"
+    >
+      ✕
+    </button>
+
+    <h2 id="demoTitle"></h2>
+
+    <p id="demoText"></p>
+
+    <button
+      type="button"
+      onclick="nextDemo()"
+      class="next-demo"
+    >
+      Next →
+    </button>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* ================= DEMO OVERLAY ================= */
+
+.demo-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .88);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.demo-box {
+  position: relative;
+  width: min(420px, 100%);
+  background: #111;
+  color: white;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  border: 1px solid #333;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.demo-box h2 {
+  margin: 0 35px 15px 0;
+  font-size: 24px;
+}
+
+.demo-box p {
+  margin: 0;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.next-demo,
+.close-demo {
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.next-demo {
+  margin-top: 22px;
+  padding: 12px 20px;
+  background: #E8283F;
+  color: white;
+  border: 1px solid #E8283F;
+  font-weight: 700;
+}
+
+.next-demo:hover {
+  background: #c91f34;
+}
+
+.close-demo {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #444;
+}
+
+.close-demo:hover {
+  color: white;
+  border-color: #E8283F;
+}
+
+</style>
+
 </body>
 </html>
